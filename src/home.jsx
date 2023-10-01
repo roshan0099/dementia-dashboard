@@ -123,7 +123,7 @@ export default function Home() {
 
                 {/* <!-- Footer --> */}
                 <footer className="bg-dark text-light text-center py-3">
-                    &copy; 2023 EaseDementia
+                    &copy; 2023 EaseDementia.
                 </footer>
 
 

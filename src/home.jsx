@@ -8,7 +8,7 @@ const URL = import.meta.env.VITE_URL
 const KEY = import.meta.env.VITE_KEY
 const emailId = import.meta.env.VITE_EMAIL
 
-const supabase = createClient(URL,KEY)
+const supabase = createClient(URL, KEY)
 export default function Home() {
     const [user, setUser] = useState()
     const [queryData, usequeryData] = useState([])
@@ -21,7 +21,7 @@ export default function Home() {
                 .then(profile => {
 
                     setUser(profile.data.user)
-                    
+
 
 
                 })
@@ -30,12 +30,12 @@ export default function Home() {
             const { data, error } = await supabase
                 .from('customer_info')
                 .select("*")
-                usequeryData(data)
+            usequeryData(data)
 
         }
 
         getUserDeets()
-        
+
         // setUser(currentUser);
     }, []);
 
@@ -46,51 +46,54 @@ export default function Home() {
     }
 
 
-    function DisplayTable(){
+    function DisplayTable() {
         // const queryArray = Array.from(queryData)
         // (queryData.length !== 0) && (user?.email === emailId)
-        if( (queryData.length !== 0)){
+        if ((queryData.length !== 0)) {
 
-            return(
+            return (
                 <>
-                <div className="container mt-5">
-                <table className="table">
-                <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
-                                <th>Place</th>
-                                <th>Message</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className="container mt-5">
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Place</th>
+                                        <th>Message</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                { queryData.map((elm,id) => {
-                    return(
-                        <tr key={id}>
-                        <td>{elm.name}</td>
-                        <td>{elm.phone}</td>
-                        <td>{elm.email}</td>
-                        <td>{elm.place}</td>
-                        <td>{elm.message}</td>
-                        <td> <button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                    
-                    )
+                                    {queryData.map((elm, id) => {
+                                        return (
+                                            <tr key={id}>
+                                                <td>{elm.name}</td>
+                                                <td>{elm.phone}</td>
+                                                <td>{elm.email}</td>
+                                                <td>{elm.place}</td>
+                                                <td>{elm.message}</td>
+                                                <td> <button className="btn btn-danger">Delete</button></td>
+                                            </tr>
 
-                })}
-                </tbody>
-                </table>
-                </div>
+                                        )
+
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
                 </>
-              
+
             )
-        }else{
-            return(
+        } else {
+            return (
                 <>
-                Nothing to show
+                    Nothing to show
                 </>
             )
         }
@@ -119,7 +122,7 @@ export default function Home() {
                 </nav>
 
                 {/* <!-- Body - Table --> */}
-               <DisplayTable/>
+                <DisplayTable />
 
                 {/* <!-- Footer --> */}
                 <footer className="bg-dark text-light text-center py-3">

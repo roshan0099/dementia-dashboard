@@ -3,36 +3,33 @@ import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import "./style/home_style.css";
 import logo from "./imgs/logo-nobg.png"
+import supabase from "./authLogin";
 
-const URL = import.meta.env.VITE_URL
-const KEY = import.meta.env.VITE_KEY
-const emailId = import.meta.env.VITE_EMAIL
-
-const supabase = createClient(URL, KEY)
 export default function Home() {
     const [user, setUser] = useState()
     const [queryData, usequeryData] = useState([])
     const navigate = useNavigate()
+    const [deleteID, setDeleteID] = useState(false)
 
+    async function getUserDeets() {
+        await supabase.auth.getUser()
+            .then(profile => {
+
+                setUser(profile.data.user)
+
+
+
+            })
+
+
+        const { data, error } = await supabase
+            .from('customer_info')
+            .select("*")
+        usequeryData(data)
+
+    }
     useEffect(() => {
 
-        async function getUserDeets() {
-            await supabase.auth.getUser()
-                .then(profile => {
-
-                    setUser(profile.data.user)
-
-
-
-                })
-
-
-            const { data, error } = await supabase
-                .from('customer_info')
-                .select("*")
-            usequeryData(data)
-
-        }
 
         getUserDeets()
 
@@ -43,6 +40,18 @@ export default function Home() {
         const { error } = await supabase.auth.signOut()
         setUser(null)
         navigate("/")
+    }
+
+    async function deleteBtn(e) {
+        setDeleteID(true)
+        console.log(e.target.id)
+
+        const { error } = await supabase
+            .from('customer_info')
+            .delete()
+            .eq('id',e.target.id)
+        getUserDeets()
+        // setDeleteID(false)    
     }
 
 
@@ -76,7 +85,7 @@ export default function Home() {
                                                 <td>{elm.email}</td>
                                                 <td>{elm.place}</td>
                                                 <td>{elm.message}</td>
-                                                <td> <button className="btn btn-danger">Delete</button></td>
+                                                <td> <button className="btn-simple" id={elm.id} onClick={deleteBtn}>Delete</button></td>
                                             </tr>
 
                                         )
@@ -137,7 +146,9 @@ export default function Home() {
 
     return (
         <>
-            <Display />
+            {/* {deleteID ? <Display /> : <Display/>}
+             */}
+             <Display />
         </>
     )
 }

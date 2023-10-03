@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "./style/loginDesign_style.css"
 import logo from "./imgs/logo-nobg.png"
 import Home from "./home";
+import supabase from "./authLogin";
 
-const URL = import.meta.env.VITE_URL
-const KEY = import.meta.env.VITE_KEY
-const supabase = createClient(URL,KEY)
+
 export default function Login() {
     const navigate = useNavigate()
 

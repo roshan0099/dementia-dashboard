@@ -7,3 +7,17 @@ footer{
 .pointer{
     cursor: pointer;
 }
+
+.btn-simple {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #670b56;
+    transition : 1s;
+    padding: 5px 10px;
+  }
+
+
+  .btn-simple:hover{
+    background-color: #d51616;
+    color: white;
+  }
